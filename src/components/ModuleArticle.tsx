@@ -6,7 +6,7 @@ interface ModuleProps {
     altText: string;
     title: string;
     items: string[];
-    reverse?
+    reverse?: boolean;
 }
 
 const ModuleArticle: React.FC<ModuleProps> = ({ imageSrc, altText, title, items, reverse }) => {
