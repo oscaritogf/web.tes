@@ -1,0 +1,104 @@
+---
+export interface Props{
+  title?: string;
+}
+
+export interface MenuOptions{
+    title: string;
+    href: string;
+}
+
+const menuOptions: MenuOptions[] = [
+    {title: 'Características', href: '/'},
+    {title: 'Precios', href: '/pricing'},
+    {title: 'Sobre Nosotros', href: '/sn'},
+]
+
+const {title}= Astro.props;
+---
+<header class="bg-blue-950 text-white p-1 w-full z-25">
+    <nav class="mx-auto flex max-w-screen-xl px-4 sm:px-6 lg:px-8 items-center justify-between" aria-label="Global">
+      <!-- Logo a la izquierda -->
+      <div class="flex-shrink-0">
+        <a class="block text-teal-600" href="/">
+          <span class="sr-only">{title}</span>
+          <img src="/assets/img/logo.png" alt="Logo" class="w-14 h-14">
+        </a>
+      </div>
+  
+      <!-- Menú y botones a la derecha -->
+      <div class="flex-grow flex justify-end items-center gap-4">
+        <!-- Menú -->
+        <div class="hidden lg:flex items-center gap-6">
+          {menuOptions.map(
+            (menuOption) => (
+              <a href={menuOption.href} class="text-sm font-semibold leading-6 text-white transition hover:text-lime-400">{menuOption.title}</a>
+            )
+          )}
+        </div>
+        
+        <!-- Botones -->
+        <div class="hidden lg:flex items-center gap-4">
+          <a class="rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow" href="/login">
+            Login
+          </a>
+          <a class="rounded-md bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hidden sm:flex" href="/register">
+            Register
+          </a>
+        </div>
+  
+        <!-- Botón de menú móvil -->
+        <div class="flex lg:hidden">
+          <button id="menu-button" type="button" class="rounded inline-flex items-center justify-between bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+  
+    <!-- Menú móvil, oculto por defecto -->
+    <div id="mobile-menu" class="hidden lg:hidden fixed inset-0 z-10 bg-blue-950 p-6">
+      <div class="flex items-center justify-between mb-6">
+        <a href="/" class="-m-1.5 p-1.5">
+          <span class="sr-only">{title}</span>
+          <img class="h-8 w-auto" src="/assets/img/logo.png" alt="Logo">
+        </a>
+        <button id="close-menu-button" type="button" class="-m-2.5 rounded-md p-2.5 text-white">
+          <span class="sr-only">Close menu</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="space-y-2">
+        {menuOptions.map(
+          (menuOption) => (
+            <a href={menuOption.href} class="block text-base font-semibold leading-6 text-white transition hover:text-lime-400 mb-4">{menuOption.title}</a>
+          )
+        )}
+        <a class="block rounded-md bg-blue-600 px-5 py-2.5 text-base font-medium text-white shadow mb-4" href="/login">
+          Login
+        </a>
+        <a class="block rounded-md bg-blue-600 px-5 py-2.5 text-base font-medium text-white" href="/register">
+          Register
+        </a>
+      </div>
+    </div>
+  </header>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuButton = document.getElementById('menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const closeMenuButton = document.getElementById('close-menu-button');
+      
+      menuButton?.addEventListener('click', function() {
+        mobileMenu?.classList.toggle('hidden');
+      });
+      closeMenuButton?.addEventListener('click', function() {
+        mobileMenu?.classList.add('hidden');
+      });
+    });
+  </script>
